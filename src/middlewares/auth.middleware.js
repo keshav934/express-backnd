@@ -1,7 +1,7 @@
-import { ApiError } from "../utils/apiError";
-import { asyncHandler } from "../utils/asyncHandler"
+import { ApiError } from "../utils/apiError.js";
+import { asyncHandler } from "../utils/asyncHandler.js"
 import Jwt from "jsonwebtoken";
-import { User } from "../models/user.model";
+import { User } from "../models/user.model.js";
 
 /**
  * this middleware will verify if user is present or not by verifying jwt
@@ -14,7 +14,10 @@ import { User } from "../models/user.model";
 
 export const verifyJWT = asyncHandler(async (req, _, next) => { // res: not used so instead of that underscore('_') can be written
     try {
-        const token = req.cookie?.accessToken || req.header("Authorization")?.replace("Bearer ", "");
+        console.log(req);
+        const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "");
+
+        console.log(token);
 
         if (!token) {
             throw new ApiError(401, "UnAuthorized request");
